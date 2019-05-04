@@ -1,0 +1,61 @@
+﻿@{
+    List<ResponseMessage> messages = new List<ResponseMessage>();
+
+    if (TempData["Messages"] != null)
+    {
+        messages.AddRange(TempData.Get<IEnumerable<ResponseMessage>>("Messages"));
+    }
+    if (ViewData["Messages"] != null)
+    {
+        messages.AddRange(ViewData["Messages"] as IEnumerable<ResponseMessage>);
+    }
+}
+
+@if (messages.Any())
+{
+
+    <div class="container" style="margin-top:1em;">
+
+        <div class="row">
+            <div class="col-xs-12" id="Messages">
+
+                @if (messages != null)
+                {
+                    if (messages.Any())
+                    {
+                        foreach (ResponseMessage message in messages)
+                        {
+                            string alertClasses = "";
+                            switch (message.MessageType)
+                            {
+                                case ResponseMessageType.Information:
+                                    alertClasses = "alert-info";
+                                    break;
+                                case ResponseMessageType.Success:
+                                    alertClasses = "alert-success";
+                                    break;
+                                case ResponseMessageType.Warning:
+                                    alertClasses = "alert-warning";
+                                    break;
+                                case ResponseMessageType.Error:
+                                    alertClasses = "alert-danger";
+                                    break;
+                                default:
+                                    alertClasses = "alert-info";
+                                    break;
+                            }
+
+                            <div class="alert alert-dismissable @(alertClasses)" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <h4>@message.Header</h4>
+                                @message.Message
+                            </div>
+
+                        }
+
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}

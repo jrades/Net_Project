@@ -1,0 +1,83 @@
+﻿@model IEnumerable<MortgageApplication>;
+@{
+    ViewData["Title"] = "Mortgage Applications";
+}
+
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <div class="panel panel-primary">
+            <div class="panel-heading"><h1 class="panel-title">Mortgage Applications</h1></div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-12 text-right">
+                        <a class="btn btn-default" asp-controller="Home" asp-action="New" asp-area="">New Application</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="table table-bordered table-responsive table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Applicant</th>
+                                    <th>Loan Amount</th>
+                                    <th>Down Payment</th>
+                                    <th>APR</th>
+                                    <th>Loan Duration</th>
+                                    <th>Monthly Payment</th>
+                                    <th>Created Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Any())
+                                {
+                                    foreach (var application in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <a class="btn btn-default" asp-controller="Home" asp-action="Details" asp-area="" asp-route-id="@application.ApplicationId">Details</a>
+                                            </td>
+                                            <td>
+                                                @application.LastName, @application.FirstName
+                                            </td>
+                                            <td class="text-right">
+                                                @string.Format("{0:C2}", application.LoanAmount)
+                                            </td>
+                                            <td class="text-right">
+                                                @string.Format("{0:C2}", application.DownPayment)
+                                            </td>
+                                            <td class="text-right">
+                                                @string.Format("{0:P4}", (application.InterestRate / 100))
+                                            </td>
+                                            <td class="text-right">
+                                                @application.LoanDuration
+                                            </td>
+                                            <td class="text-right">
+                                                @string.Format("{0:C2}", application.MonthlyPayment())
+                                            </td>
+                                            <td>
+                                                <time datetime="@application.CreatedDate.ToString("o")">@application.CreatedDate.ToString()</time>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td class="text-center" colspan="8">
+                                            No Mortage Applications Available
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

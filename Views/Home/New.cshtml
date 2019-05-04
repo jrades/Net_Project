@@ -1,0 +1,188 @@
+﻿@model MortgageApplication;
+
+@{
+    ViewData["Title"] = "New";
+}
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <div asp-validation-summary="All"></div>
+
+        <form asp-action="Submit" asp-controller="Home" asp-area="" method="post" enctype="multipart/form-data">
+            <div class="panel panel-primary">
+                <div class="panel-heading"><h1 class="panel-title">Mortgage Application</h1></div>
+                <div class="panel-body">
+                    <h2 class="h3">Applicant Details</h2>
+                    @* Begin form fields for applicant details *@
+                    <div class="form-group">
+                        <label asp-for="LastName">Last Name</label>
+                        <input type="text" class="form-control" asp-for="LastName" placeholder="Last name" maxlength="128" required value="@Model.LastName" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="FirstName">First Name</label>
+                        <input type="text" class="form-control" asp-for="FirstName" placeholder="Last name" maxlength="128" required value="@Model.FirstName" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="DateOfBirth">Date of Birth</label>
+                        <input type="date" class="form-control" asp-for="DateOfBirth" placeholder="" required value="@(Model.DateOfBirth?.ToString("o"))" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="EmailAddress">Email Address</label>
+                        <input type="email" class="form-control" asp-for="EmailAddress" placeholder="user@domain.tld" maxlength="256" required value="@Model.EmailAddress" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="PhoneNumber">Phone Number</label>
+                        <input type="tel" class="form-control" asp-for="PhoneNumber" placeholder="" maxlength="32" required value="@Model.PhoneNumber" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Address">Address</label>
+                        <input type="text" class="form-control" asp-for="Address" placeholder="1234 Main St." maxlength="512" required value="@Model.Address" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="City">City</label>
+                        <input type="text" class="form-control" asp-for="City" placeholder="Houston" maxlength="256" required value="@Model.City" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="State">State</label>
+                        <input type="text" class="form-control" asp-for="State" placeholder="Texas" maxlength="50" required value="" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ZipCode">ZIP Code</label>
+                        <input type="text" class="form-control" asp-for="ZipCode" placeholder="77058" maxlength="10" required value="@Model.ZipCode" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="GrossIncomeFY1">Gross Income 2018</label>
+                        <input type="number" class="form-control" asp-for="GrossIncomeFY1" placeholder="0" min="0" required value="@Model.GrossIncomeFY1" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="GrossIncomeFY2">Gross Income 2017</label>
+                        <input type="number" class="form-control" asp-for="GrossIncomeFY2" placeholder="0" min="0" required value="@Model.GrossIncomeFY2" />
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="GrossIncomeFY3">Gross Income 2016</label>
+                        <input type="number" class="form-control" asp-for="GrossIncomeFY3" placeholder="0" min="0" required value="@Model.GrossIncomeFY3" />
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" asp-for="Married" value="true"> Married
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" asp-for="Veteran" value="true"> Veteran
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="AdditionalInfo">Additional Information</label>
+                        <textarea class="form-control" asp-for="AdditionalInfo" placeholder="Any additional information" maxlength="2000" required>@(Model.AdditionalInfo)</textarea>
+                    </div>
+                    @* End form fields for applicant details *@
+
+                    <h2 class="h3">Loan Details</h2>
+
+                    @* Begin form fields for loan details *@
+                    <div class="form-group">
+                        <label asp-for="LoanAmount">Loan Amount</label>
+                        <input type="number" class="form-control" asp-for="LoanAmount" placeholder="0" min="50000" max="1000000" required value="@Model.LoanAmount">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="DownPayment">Down Payment</label>
+                        <input type="number" class="form-control" asp-for="DownPayment" placeholder="0" min="0" required value="@Model.DownPayment">
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="InterestRate">Interest Rate</label>
+                        <input type="number" class="form-control" asp-for="InterestRate" placeholder="0.0" min="2.00" step="0.01" max="15.00" required value="@Model.InterestRate" />
+                    </div>
+
+                    @* Uncomment the following if you want to use a Select for the Loan Duration *@
+                    
+                        <div class="form-group">
+                            <label asp-for="LoanDuration">Loan Duration</label>
+                            <select class="form-control" asp-for="InterestRate" >
+                                @if (Model.LoanDuration == 180)
+                                {
+                                    <option value="180" selected>15 Years(180 Months)</option>
+                                }
+                                else
+                                {
+                                    <option value="180">15 Years(180 Months)</option>
+                                }
+                                @if (Model.LoanDuration == 360)
+                                {
+                                    <option value="360" selected>30 Years (360 Months)</option>
+                                }
+                                else
+                                {
+                                    <option value="360">30 Years (360 Months)</option>
+                                }
+                            </select>
+                        </div>
+                    
+
+                    @* Uncomment the following if you want to use Radio Inputs for the Loan Duration *@
+                    @*
+                        <div class="form-group">
+                            <strong>Loan Duration</strong>
+                            <div class="radio">
+                                @if (Model.LoanDuration == 180)
+                                {
+                                    <label>
+                                        <input type="radio" asp-for="LoanDuration" value="180" checked /> 15 Years(180 Months)
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label>
+                                        <input type="radio" asp-for="LoanDuration" value="180" /> 15 Years(180 Months)
+                                    </label>
+                                }
+                            </div>
+                            <div class="radio">
+                                @if (Model.LoanDuration == 360)
+                                {
+                                    <label>
+                                        <input type="radio" asp-for="LoanDuration" value="360" checked /> 30 Years (360 Months)
+                                    </label>
+                                }
+                                else
+                                {
+                                    <label>
+                                        <input type="radio" asp-for="LoanDuration" value="360" /> 30 Years (360 Months)
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                    
+*@
+                    @* End form fields for loan details *@
+                </div>
+                <div class="panel-footer text-right">
+                    <button type="reset" class="btn btn-default">Reset</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
